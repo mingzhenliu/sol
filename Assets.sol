@@ -1,47 +1,33 @@
 pragma solidity ^0.4.4;
 
-contract accountABI{function checkThreshold(address[] keySigners)public constant returns(bool){}
-}
+import "./AssetsBase.sol";
 
-contract Assets{
-    address accountContractAddress;
+contract Assets is AssetsBase{
+    
     uint balance;
-    uint nonce;
-    function Assets(address accountContractAddress, uint balance) public {
-        accountContractAddress = accountContractAddress;
-        balance = balance;
-        nonce = 0;
+    string assetsInfo;
+   
+    function Assets(string assetsInfo1, address accountContractAddress, uint balance1) AssetsBase(accountContractAddress) public {
+        balance = balance1;
+        assetsInfo = assetsInfo1;
     }
     
-     function CallCheckThreshold(address[] signers) public constant returns(bool) {
-        return accountABI(accountContractAddress).checkThreshold(signers);
-    }
-    
-     function getNonce() public constant returns(uint) {
-         return nonce;
-    }
-    
-    function subBalance(uint nonce1, uint subBalance, uint8[] v, bytes32[] r, bytes32[] s) public returns(bool) {
+    function subBalance(uint nonce1, uint value, uint8[] v, bytes32[] r, bytes32[] s) public returns(bool) {
         bytes32 nonceHash = keccak256(nonce1);
         address[] hashSigners;
          for(uint i=0; i< v.length; ++i)
          {
              hashSigners.push(ecrecover(nonceHash,v[i],r[i],s[i]));
          }
-        if(CallCheckThreshold(hashSigners))
+        if(check(hashSigners,nonce1))
         {
-            if(nonce1 == nonce)
-            {
-                balance -= subBalance;
-                nonce++;
-                return true;
-            }
+             balance -= value;
         }
         return false;
     }
     
-    function addBalance(uint addBalance) public returns(bool) {
-        balance += addBalance;
+    function addBalance(uint value) public returns(bool) {
+        balance += value;
         return true;
     }
     
