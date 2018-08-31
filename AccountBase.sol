@@ -16,7 +16,10 @@ contract AccountBase{
 			nonce=0;
 			adminAddress=adminAddress1;
      }
-     
+	 
+    function getNonce() public constant returns(uint) {
+         return nonce;
+    }
      
      function replaceAccount(uint8 nonce1, address[] newAccountAddress, uint8[] v, bytes32[] r, bytes32[] s) public {
         bytes32 oldHash = keccak256(nonce1);
