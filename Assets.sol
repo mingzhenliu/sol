@@ -1,9 +1,10 @@
 pragma solidity ^0.4.4;
 
 import "./AssetsBase.sol";
+import "./LibString.sol";
 
 contract Assets is AssetsBase{
-    
+     using LibString for *;
     uint balance;
     string assetsInfo;
    
@@ -12,14 +13,14 @@ contract Assets is AssetsBase{
         assetsInfo = assetsInfo1;
     }
     
-    function subBalance(uint nonce1, uint value, uint8[] v, bytes32[] r, bytes32[] s) public returns(bool) {
+    function subBalance(string nonce1, uint value, uint8[] v, bytes32[] r, bytes32[] s) public returns(bool) {
         bytes32 nonceHash = keccak256(nonce1);
-        address[] hashSigners;
+        address[] memory hashSigners =  new address[](v.length);
          for(uint i=0; i< v.length; ++i)
          {
-             hashSigners.push(ecrecover(nonceHash,v[i],r[i],s[i]));
+             hashSigners[i]=ecrecover(nonceHash,v[i],r[i],s[i]);
          }
-        if(check(hashSigners,nonce1))
+        if(check(hashSigners,uint(nonce1.toInt())))
         {
              balance -= value;
         }

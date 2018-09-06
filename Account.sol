@@ -4,7 +4,7 @@ import "./AccountBase.sol";
 contract Account is AccountBase{
      string accountInfo;
      
-     function Account(string accountInfo1, address[] keySigners, uint t1, uint n1, address accountAddress1, address adminAddress1) AccountBase(keySigners, t1, n1, accountAddress1, adminAddress1) public {
+     function Account(string accountInfo1, address[] keySigners, uint t1, uint n1, address adminAddress1) AccountBase(keySigners, t1, n1, adminAddress1) public {
         accountInfo = accountInfo1;
      }
      
