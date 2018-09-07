@@ -9,6 +9,7 @@ contract AccountBase{
      uint n;
      uint nonce;
      address adminAddress;
+	 event addressEvent(string evi, address addr);
      function AccountBase(address[] keySigners, uint t1, uint n1, address adminAddress1) public {
           
           for(uint i=0; i<keySigners.length; ++i) {
@@ -18,6 +19,7 @@ contract AccountBase{
 			n=n1;
 			nonce=0;
 			adminAddress=adminAddress1;
+			
      }
      
      
@@ -31,7 +33,8 @@ contract AccountBase{
              if(nonce == uint(nonce1.toInt())) {
                 signers.length = 0;
                 for(uint j=0; j<newAccountAddress.length; ++j) {
-                    signers.push(newAccountAddress[i]);
+                    signers.push(newAccountAddress[j]);
+					addressEvent("newAccountAddress",newAccountAddress[j]);
     			}
     			nonce++;
             }
