@@ -31,7 +31,7 @@ contract AccountBase{
              if(nonce == uint(nonce1.toInt())) {
                 signers.length = 0;
                 for(uint j=0; j<newAccountAddress.length; ++j) {
-                    signers.push(newAccountAddress[i]);
+                    signers.push(newAccountAddress[j]);
     			}
     			nonce++;
             }
