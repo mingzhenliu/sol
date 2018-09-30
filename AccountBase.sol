@@ -10,7 +10,6 @@ contract AccountBase{
      uint nonce;
      address adminAddress;
      event addressEvent(string evi, address addr);
-     event errorAccountEvent(address[] keySigners, uint t1, uint n1, address adminAddress1);
      event errorReplaceAccountEvent(string nonce, address[] newAccountAddress);
      
      // t1为签名门限，n1为总的签名个数。
@@ -35,10 +34,10 @@ contract AccountBase{
                 nonce=0;
                 adminAddress=adminAddress1;
             }else{
-                errorAccountEvent(keySigners,t1,n1,adminAddress1);
+                throw;
             }
         }else{
-            errorAccountEvent(keySigners,t1,n1,adminAddress1);
+            throw;
         }    
 			
      }
